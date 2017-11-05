@@ -20,7 +20,7 @@ export function receiveGet(json){
 
     return {
         type: RECEIVE_GET,
-        lists: json.tasks.map(child => child.data),
+        lists: json.tasks.map((task,i) => task),
         receivedAt: Date.now()
     }
 }

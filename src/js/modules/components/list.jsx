@@ -6,12 +6,13 @@ import { connect } from 'react-redux'
 class List extends React.Component{
 
     static propTypes = {
-        listOfTheTasks: PropTypes.array.isRequired,
+        listOfTheTasks: PropTypes.func.isRequired,
         text: PropTypes.string.isRequired
     };
 
     componentDidMount(){
         const { dispatch } = this.props;
+        console.log("this state propppppps", this.props);
         console.log("DISPATCH ", dispatch);
         dispatch(receivedData());
     }
@@ -21,12 +22,12 @@ class List extends React.Component{
             <div>
                 <ul>
                     <li>{this.props.text}</li>
-                    {
-                        this.props.listOfTheTasks.map((task,i) => <li key={i}>
-                            <label>{task.name}</label>
-                            <input type="input" name="task-name" value={task.text} onChange={changeName} />
-                        </li>)
-                    }
+                    {/*{*/}
+                        {/*this.props.listOfTheTasks.map((task,i) => <li key={i}>*/}
+                            {/*<label>{task.name}</label>*/}
+                            {/*<input type="input" name="task-name" value={task.text} onChange={changeName} />*/}
+                        {/*</li>)*/}
+                    {/*}*/}
                 </ul>
             </div>
         );
@@ -38,20 +39,17 @@ class List extends React.Component{
  *
  * @param state
  */
-function mapStateToProps( state ){
-   let text = "Zhopa";
-   return {
+const  mapStateToProps = state => {
+    let text = "Zhopa";
+    const {lists} = state
+    console.log(" map state to props state >>>  ", state);
+    console.log(" map state to props state >>>  ", state.lists);
+
+    return {
        text: text,
-        listOfTheTasks: (state)=>{
-                switch (stata.filter){
-                    case "SHOW_ALL":
-                        return state;
-                        break;
-                    default:
-                        return state;
-                }
-           }
-   }
+       listOfTheTasks: state.lists
+
+    }
 }
 
 export default connect(mapStateToProps)(List)
