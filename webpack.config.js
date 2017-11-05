@@ -12,7 +12,7 @@ module.exports = {
                 exclude: /{node_modules}/,
                 loader: 'babel-loader',
                 query: {
-                    presets: ['latest','react'],
+                    presets: [ 'latest', 'react' ],
                     plugins: ["transform-class-properties",
                         "transform-object-rest-spread"]
                 },

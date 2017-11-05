@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 
 import {
     RECEIVE_GET
-} from '../actions.js'
+} from '../actions.jsx'
 
 /**
  * Gets data

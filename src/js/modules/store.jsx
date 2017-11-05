@@ -6,6 +6,7 @@ import dataReducer from './reducers/reducers'
 const loggerMiddleware = createLogger()
 
 export default function configureStore(preloadedState) {
+    console.log('dsatra reducers ', dataReducer);
     return createStore(
         dataReducer,
         preloadedState,

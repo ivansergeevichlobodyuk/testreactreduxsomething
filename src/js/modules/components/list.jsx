@@ -1,21 +1,28 @@
 import React, {PropTypes as P}  from 'react';
 import PropTypes from 'prop-types';
+import {receivedData} from '../actions.jsx';
+import { connect } from 'react-redux'
 
-export default class List extends React.Component{
+class List extends React.Component{
 
     static propTypes = {
-        taskList: PropTypes.array.isRequired,
+        listOfTheTasks: PropTypes.array.isRequired,
         text: PropTypes.string.isRequired
     };
 
+    componentDidMount(){
+        const { dispatch } = this.props;
+        console.log("DISPATCH ", dispatch);
+        dispatch(receivedData());
+    }
+
     render(){
-        const {text,taskList} = this.props;
         return(
             <div>
                 <ul>
-                    <li>{text}</li>
+                    <li>{this.props.text}</li>
                     {
-                        listOfTheTasks.map((task,i) => <li key={i}>
+                        this.props.listOfTheTasks.map((task,i) => <li key={i}>
                             <label>{task.name}</label>
                             <input type="input" name="task-name" value={task.text} onChange={changeName} />
                         </li>)
@@ -25,3 +32,26 @@ export default class List extends React.Component{
         );
     }
 }
+
+/**
+ * Maps state to props
+ *
+ * @param state
+ */
+function mapStateToProps( state ){
+   let text = "Zhopa";
+   return {
+       text: text,
+        listOfTheTasks: (state)=>{
+                switch (stata.filter){
+                    case "SHOW_ALL":
+                        return state;
+                        break;
+                    default:
+                        return state;
+                }
+           }
+   }
+}
+
+export default connect(mapStateToProps)(List)

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import List from './modules/components/list.jsx';
+import Root from './modules/containers/root';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 
@@ -13,17 +13,7 @@ import {Provider} from 'react-redux';
 //
 // let jo = "45454";
 
-componentDidMount(){
-
-}
-
-console.log("LIST ", taskList);
-
-// ReactDOM.render(
-// <List text = {jo} taskList={taskList} />,
-//     document.getElementById('fofo')
-// );
-
-// ReactDOM.render(
-//
-// );
+ReactDOM.render(
+        <Root />,
+        document.getElementById('fofo')
+);
