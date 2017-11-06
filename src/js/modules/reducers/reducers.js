@@ -2,14 +2,13 @@ import { combineReducers } from 'redux'
 
 import {
     RECEIVE_GET
-} from '../actions.jsx'
+} from '../actions.jsx';
 
 const initialState = {
-    tasks:[
-        { text: "Laern js 1", completed:true },
-        { text: "Laern js 2", completed:false },
-        { text: "Laern js 3", completed:true },
-    ]
+    lists:[],
+    isFetched: false,
+    filter: 'SHOW_ALL',
+    receivedTime: Date()
 };
 
 /**
@@ -22,7 +21,13 @@ const initialState = {
 function getsData(state = initialState, action){
     switch (action.type){
         case RECEIVE_GET:
-            return { ...state, lists: action.lists, filter: 'SHOW_ALL' , receivedTime: action.receivedAt};
+            console.log("redux receive get", state);
+            return { ...state,
+                lists: action.lists,
+                filter: 'SHOW_ALL' ,
+                isFetched: true,
+                receivedTime: action.receivedAt
+            };
         break;
         default:
                 return state;

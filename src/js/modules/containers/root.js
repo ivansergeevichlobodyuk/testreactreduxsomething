@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
-import List from '../components/list.jsx';
+import List from '../components/list';
 import configureStore from '../store.jsx';
 import {receivedData} from '../actions.jsx';
 

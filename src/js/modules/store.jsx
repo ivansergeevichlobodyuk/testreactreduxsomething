@@ -5,14 +5,13 @@ import dataReducer from './reducers/reducers'
 
 const loggerMiddleware = createLogger()
 
+const middleware = [ thunkMiddleware ]
+
 export default function configureStore(preloadedState) {
-    console.log('dsatra reducers ', dataReducer);
     return createStore(
         dataReducer,
-        preloadedState,
         applyMiddleware(
-            thunkMiddleware,
-            loggerMiddleware
+            ...middleware
         )
     )
 }

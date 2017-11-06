@@ -30,11 +30,13 @@ export function receiveGet(json){
  * @returns {function(*, *)}
  */
 export function receivedData(){
-    return  (dispatch, state) => {
-        alert("12322222222222222222222222222");
-        fetch("http://boards-api.sys/app_dev.php/api/boards/")
-             .then(response => response.json())
-             .then(json => dispatch(receiveGet(json)));
+    return  (dispatch, getState) => {
+        console.log('is fetched', getState().getsData.isFetched);
+        if ( getState().getsData.isFetched == false ){
+            fetch("http://boards-api.sys/app_dev.php/api/boards/")
+                .then(response => response.json())
+                .then(json => dispatch(receiveGet(json)));
+        }
      }
 }
 
