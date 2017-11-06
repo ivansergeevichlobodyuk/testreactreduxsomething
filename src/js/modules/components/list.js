@@ -19,15 +19,14 @@ class List extends Component{
 
     render(){
         const { dispatch } = this.props;
-        dispatch(receivedData());
         return(
             <div>
                 <ul>
                     <li>{this.props.text}</li>
                     {this.props.isFetched ? (
                         this.props.listOfTheTasks.map((task,i) => <li key={i}>
-                            <label>{task.taksName}</label>
-                            <input type="input" name="task-name" value={task.taksName} />
+                            <label>{task.taskName}</label>
+                            <input type="input" name="task-name" value={task.taskName} />
                         </li>)):(<div>Loading</div>)
                     }
                 </ul>
