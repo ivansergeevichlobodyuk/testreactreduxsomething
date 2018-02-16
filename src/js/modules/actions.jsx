@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 export const RECEIVE_GET = 'RECEIVE_GET'
 export const CHANGE_NAME = 'CHANGE_NAME'
 export const CHANGE_DONE = 'CHANGE_DONE'
+export const ADD_ITEM = 'ADD_ITEM'
 // export const SELECT_SUBREDDIT = 'SELECT_SUBREDDIT'
 // export const INVALIDATE_SUBREDDIT = 'INVALIDATE_SUBREDDIT'
 
@@ -15,13 +16,37 @@ export const CHANGE_DONE = 'CHANGE_DONE'
  * @param json
  */
 export function receiveGet(json){
-
-    console.log("json >> ", json.tasks);
-
     return {
         type: RECEIVE_GET,
         lists: json.tasks.map((task,i) => task),
-        receivedAt: Date.now()
+        receivedTime: Date.now()
+    }
+}
+
+/**
+ *
+ * @param json
+ * @returns {{type: string, item: *, addedAt: number}}
+ */
+export function addItem(json){
+    return {
+        type: ADD_ITEM,
+        item: json.item,
+        addedAt: Date.now()
+    }
+}
+
+/**
+ * Adds item data
+ *
+ * @param data
+ * @returns {function(*, *)}
+ */
+export function addItemData(data){
+    return (dispatch, getState) => {
+        fetch("http://boards-api.sys/app_dev.php/api/board", {method: "POST", data: {data}})
+            .then(response=>response.json())
+            .then(json => dispatch(addItem(json)))
     }
 }
 
@@ -37,7 +62,7 @@ export function receivedData(){
                 .then(response => response.json())
                 .then(json => dispatch(receiveGet(json)));
         }
-     }
+    }
 }
 
 /**

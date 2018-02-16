@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {receivedData} from '../actions.jsx';
 import { connect } from 'react-redux'
+import Additem from './additem.jsx';
 
 class List extends Component{
     static propTypes = {
@@ -17,7 +18,7 @@ class List extends Component{
         dispatch(receivedData());
     }
 
-    render(){
+    render( ){
         const { dispatch } = this.props;
         return(
             <div>
@@ -30,6 +31,7 @@ class List extends Component{
                         </li>)):(<div>Loading</div>)
                     }
                 </ul>
+                <Additem />
             </div>
         );
     }
