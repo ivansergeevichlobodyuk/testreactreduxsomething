@@ -2,12 +2,17 @@ import { combineReducers } from 'redux'
 
 import {
     RECEIVE_GET,
-    ADD_ITEM
+    ADD_ITEM,
+    EDIT_ITEM,
+    TOGGLE_EDIT,
+    TOGGLE_EDIT_ITEM
 } from '../actions.jsx';
 
 const initialState = {
     lists:[],
     isFetched: false,
+    isEdit: false,
+    editedItems: [],
     filter: 'SHOW_ALL',
     receivedTime: Date.now()
 }
@@ -22,7 +27,7 @@ const initialState = {
 function getsData(state = initialState, action){
     switch (action.type){
         case RECEIVE_GET:
-            console.log("redux receive get", state);
+            console.log(" action received time ", action.receivedTime);
             return { ...state,
                 lists: action.lists,
                 filter: 'SHOW_ALL' ,
@@ -41,6 +46,25 @@ function getsData(state = initialState, action){
             )
         break;
 
+        case TOGGLE_EDIT:
+            return Object.assign( { }, state, {
+                isEdit:!state.isEdit
+            })
+            break;
+
+        case TOGGLE_EDIT_ITEM:
+            return Object.assign( { }, state, {
+                editedItems: state.getState().editedItems.push(action.id)
+             });
+            break;
+
+
+        case EDIT_ITEM:
+            return Object.assign(  )
+        break;
+
+
+
         default:
                 return state;
     }
@@ -51,7 +75,7 @@ function getsData(state = initialState, action){
  * @type {Reducer<S>}
  */
 const dataReducer = combineReducers( {
-   getsData
+    getsData
 });
 
 /**

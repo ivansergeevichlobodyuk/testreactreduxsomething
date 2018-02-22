@@ -6,6 +6,9 @@ export const RECEIVE_GET = 'RECEIVE_GET'
 export const CHANGE_NAME = 'CHANGE_NAME'
 export const CHANGE_DONE = 'CHANGE_DONE'
 export const ADD_ITEM = 'ADD_ITEM'
+export const EDIT_ITEM = 'EDIT_ITEM'
+export const TOGGLE_EDIT = 'TOGGLE_EDIT'
+export const TOGGLE_EDIT_ITEM = 'TOGGLE_EDIT_ITEM'
 // export const SELECT_SUBREDDIT = 'SELECT_SUBREDDIT'
 // export const INVALIDATE_SUBREDDIT = 'INVALIDATE_SUBREDDIT'
 
@@ -33,6 +36,51 @@ export function addItem(json){
         type: ADD_ITEM,
         item: json.item,
         addedAt: Date.now()
+    }
+}
+
+/**
+ * Edit item
+ *
+ * @param json
+ * @returns {{type: *, item: *, editedAt: number}}
+ */
+export function editItem ( json ) {
+    return {
+        type: EDIT_ITEM,
+        item: json.item,
+        editedAt: Date.now()
+    }
+}
+
+/**
+ *
+ * @returns {{type: string, isEdit: number}}
+ */
+export function toggleEdit( ){
+    return {
+        type: TOGGLE_EDIT,
+    }
+}
+
+export function toggleEditItem( id ){
+    return {
+        type: TOGGLE_EDIT_ITEM,
+        id
+    }
+}
+
+/**
+ * Edit item data
+ *
+ * @param data
+ * @returns {function(*, *)}
+ */
+export function editItemData(data){
+    return (dispatch, getState) => {
+        fetch("http://boards-api.sys/app_dev.php/api/tasks/".data.id, {method: "PUT", data: {data}})
+            .then(response => response.json())
+            .then(json => dispatch(editItem(json)))
     }
 }
 
