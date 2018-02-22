@@ -54,6 +54,7 @@ export function editItem ( json ) {
 }
 
 /**
+ * Turn on edit mode
  *
  * @returns {{type: string, isEdit: number}}
  */
@@ -63,6 +64,12 @@ export function toggleEdit( ){
     }
 }
 
+/**
+ * Toggle edited item
+ *
+ * @param id
+ * @returns {{type: string, id: *}}
+ */
 export function toggleEditItem( id ){
     return {
         type: TOGGLE_EDIT_ITEM,

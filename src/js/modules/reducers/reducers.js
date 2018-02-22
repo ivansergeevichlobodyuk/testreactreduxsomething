@@ -53,17 +53,16 @@ function getsData(state = initialState, action){
             break;
 
         case TOGGLE_EDIT_ITEM:
-            return Object.assign( { }, state, {
-                editedItems: state.getState().editedItems.push(action.id)
-             });
+            state.editedItems.push(action.id);
+            return  {
+                ...state,
+                editedItems: state.editedItems
+            };
             break;
-
 
         case EDIT_ITEM:
             return Object.assign(  )
         break;
-
-
 
         default:
                 return state;

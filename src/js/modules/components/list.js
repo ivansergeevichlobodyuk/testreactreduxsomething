@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {receivedData,toggleEdit} from '../actions.jsx';
+import {receivedData,toggleEdit, toggleEditItem} from '../actions.jsx';
 import { connect } from 'react-redux'
 import Additem from './additem.jsx';
 
@@ -12,7 +12,8 @@ class List extends Component{
         isFetched:PropTypes.bool.isRequired,
         filter: PropTypes.string.isRequired,
         receivedTime: PropTypes.number.isRequired,
-        isEdit: PropTypes.bool.isRequired
+        isEdit: PropTypes.bool.isRequired,
+        editedItems: PropTypes.array.isRequired
     };
 
     constructor(props){
@@ -20,6 +21,8 @@ class List extends Component{
         this.toggleEdit = this.toggleEdit.bind(this);
         this.changeInput = this.changeInput.bind(this);
     }
+
+    state = {editedId: ' '}
 
     /**
      *
@@ -29,10 +32,14 @@ class List extends Component{
         this.props.receive( );
     }
 
+    /**
+     * Changes inputs events
+     *
+     * @param event
+     */
     changeInput = (event) =>{
         const {element} = this.state;
-
-    };
+    }
 
     /**
      * Enable/disable edit
@@ -43,25 +50,31 @@ class List extends Component{
         this.props.toggle( );
     };
 
+    /**
+     *
+     * @param event
+     */
+    toggleEditItem = (id) =>()=> {
+       this.props.toggleItem( id );
+    };
+
     render( ){
         return(
             <div>
                 <div>{this.props.isEdit?"Edit mode":"Display mode"}</div>
                 <ul>
                     <li>Date received: { this.props.receivedTime }</li>
-
                     <li>{this.props.text}</li>
                     {this.props.isFetched ? (
                         this.props.listOfTheTasks.map((task,i) => <li key={i}>
                             {
-                                this.props.isEdit?
+                                ( this.props.isEdit || this.props.editedItems.includes( task.id ) )?
                                     (<input type="input" onChange={this.changeInput} name="task-name" value={task.taskName} />)
                                     :
-                                    (<div onClick={this.toggleEdit}>
+                                    (<div onClick={this.toggleEditItem(task.id)}>
                                         {task.taskName}
                                     </div>)
                             }
-
                         </li>)):(<div>Loading</div>)
                     }
                 </ul>
@@ -78,17 +91,18 @@ class List extends Component{
  */
 const  mapStateToProps = (state) => {
     const text = "Zhopa";
-    const {lists, isEdit, filter, isFetched, receivedTime} = state.getsData;
+    const {lists, isEdit, filter, isFetched, editedItems, receivedTime} = state.getsData;
     console.log(" state ", state.getsData);
     console.log("LOG - LIST ", lists, filter, isFetched, receivedTime);
-    console.log( "is edit ", isEdit );
+    console.log( "edited ids ", editedItems );
     return {
        text: text,
        receivedTime: receivedTime,
        filter: filter,
        isFetched: isFetched,
        listOfTheTasks: lists,
-       isEdit: isEdit
+       isEdit: isEdit,
+       editedItems: editedItems
     }
 }
 
@@ -101,10 +115,13 @@ const  mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         toggle:( ) => {
-            dispatch(toggleEdit());
+            dispatch(toggleEdit( ));
         },
         receive: ( ) => {
             dispatch( receivedData( ))
+        },
+        toggleItem: ( id ) => {
+            dispatch( toggleEditItem( id ));
         }
     }
 }
