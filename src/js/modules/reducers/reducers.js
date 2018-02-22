@@ -53,10 +53,9 @@ function getsData(state = initialState, action){
             break;
 
         case TOGGLE_EDIT_ITEM:
-            state.editedItems.push(action.id);
             return  {
                 ...state,
-                editedItems: state.editedItems
+                editedItems:  [...state.editedItems, action.id],
             };
             break;
 
